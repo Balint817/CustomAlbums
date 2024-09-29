@@ -4,6 +4,7 @@ using System.Text.Json;
 using System.Text.Json.Nodes;
 using CustomAlbums.Data;
 using CustomAlbums.Managers;
+using CustomAlbums.ModExtensions;
 using CustomAlbums.Utilities;
 using HarmonyLib;
 using Il2CppAssets.Scripts.Database;
@@ -35,6 +36,7 @@ namespace CustomAlbums.Patches
 
         private static int _latestAlbumNum;
         private static bool _doneLoadingAlbumsFlag;
+        internal static Events.LoadAssetEvent OnAssetLoaded;
 
         /// <summary>
         ///     Binds the asset to a new key, while removing the old asset.
@@ -264,6 +266,8 @@ namespace CustomAlbums.Patches
             var assetName = IL2CPP.Il2CppStringToManaged(assetNamePtr) ?? string.Empty;
 
             Logger.Msg($"Loading {assetName}!");
+
+            OnAssetLoaded?.Invoke(typeof(AssetPatch), new AssetEventArgs(assetName, assetPtr));
 
             if (assetName.StartsWithOrdinal("ALBUM") && assetName[5..].TryParseAsInt(out var albumNum) &&
                 albumNum != AlbumManager.Uid + 1)
