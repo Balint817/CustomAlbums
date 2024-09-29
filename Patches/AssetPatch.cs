@@ -267,7 +267,7 @@ namespace CustomAlbums.Patches
 
             Logger.Msg($"Loading {assetName}!");
 
-            OnAssetLoaded?.Invoke(typeof(AssetPatch), new AssetEventArgs(assetName, assetPtr));
+            OnAssetLoaded?.Invoke(typeof(AssetPatch), new AssetEventArgs(assetName, returnValue));
 
             if (assetName.StartsWithOrdinal("ALBUM") && assetName[5..].TryParseAsInt(out var albumNum) &&
                 albumNum != AlbumManager.Uid + 1)

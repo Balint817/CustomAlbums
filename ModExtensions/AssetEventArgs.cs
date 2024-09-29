@@ -1,11 +1,13 @@
-﻿namespace CustomAlbums.ModExtensions
+﻿using BetterNativeHook;
+
+namespace CustomAlbums.ModExtensions
 { 
     public class AssetEventArgs : EventArgs
     {
         public string AssetName;
-        public IntPtr AssetPtr;
+        public ReturnValueReference AssetPtr;
 
-        public AssetEventArgs(string assetName, IntPtr assetPtr)
+        public AssetEventArgs(string assetName, ReturnValueReference assetPtr)
         {
             AssetName = assetName;
             AssetPtr = assetPtr;
