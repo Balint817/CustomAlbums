@@ -61,7 +61,9 @@ namespace CustomAlbums.Data
         public AudioClip Demo => this.GetAudio("demo");
         public Dictionary<int, Sheet> Sheets { get; } = new();
         public string AlbumName =>
-            IsPackaged ? $"album_{System.IO.Path.GetFileNameWithoutExtension(Path)}" : $"album_{System.IO.Path.GetFileName(Path)}_folder";
+            IsPackaged
+            ? $"album_{System.IO.Path.GetFileNameWithoutExtension(Path)}"
+            : $"album_{System.IO.Path.GetFileName(Path)}_folder";
         public string Uid => $"{AlbumManager.Uid}-{Index}";
 
         public bool HasFile(string name)

@@ -34,7 +34,24 @@ namespace CustomAlbums.Managers
                 return false;
             }
         }
-        private static void RemoveAllCachedAssets(string albumName)
+
+        private static void ClearCache(string albumName)
+        {
+            if (!AlbumManager.LoadedAlbums.TryGetValue($"album_{albumName}", out var album)) return;
+
+            ClearCache(album);
+        }
+        private static void ClearCache(Album album)
+        {
+            Logger.Msg("Clearing cache for " + album.AlbumName + "!");
+
+            CoverManager.CachedAnimatedCovers.Remove(album.Index);
+            CoverManager.CachedCovers.Remove(album.Index);
+            AssetPatch.RemoveFromCache($"{album.AlbumName}_demo");
+            AssetPatch.RemoveFromCache($"{album.AlbumName}_music");
+            AssetPatch.RemoveFromCache($"{album.AlbumName}_cover");
+        }
+        private static void RemoveAllAssets(string albumName)
         {
             Logger.Msg("Removing " + albumName + "!");
 
@@ -42,11 +59,7 @@ namespace CustomAlbums.Managers
 
             // Remove cached album information, not needed anymore since the album has been deleted
             AlbumManager.LoadedAlbums.Remove($"album_{albumName}");
-            CoverManager.CachedAnimatedCovers.Remove(album.Index);
-            CoverManager.CachedCovers.Remove(album.Index);
-            AssetPatch.RemoveFromCache($"album_{albumName}_demo");
-            AssetPatch.RemoveFromCache($"album_{albumName}_music");
-            AssetPatch.RemoveFromCache($"album_{albumName}_cover");
+            ClearCache(album);
 
             // Get the music info from the UID and remove it from ALBUM1000 (custom albums)
             var musicInfo = GlobalDataBase.s_DbMusicTag.GetMusicInfoFromAll($"{AlbumManager.Uid}-{album.Index}");
@@ -63,12 +76,30 @@ namespace CustomAlbums.Managers
             Logger.Msg("Successfully removed from cache!");
         }
 
-        private static void AddNewAlbum(int previousSize, string path)
+        private static MusicInfo AlbumToMusicInfo(Album album)
         {
-            var configAlbum = Singleton<ConfigManager>.instance.GetConfigObject<DBConfigALBUM>(AlbumManager.Uid + 1);
-            
+            var mi = Interop.CreateTypeValue<MusicInfo>();
+            return null;
+        }
+        private static void AddNewAlbum(string path)
+        {
+
             //var album = AlbumManager.LoadOne(path);
-            //GlobalDataBase.s_DbMusicTag.m_StageShowMusicUids.Add("");
+            //if (album is null)
+            //{
+            //    return;
+            //}
+            //var configAlbum = Singleton<ConfigManager>.instance.GetConfigObject<DBConfigALBUM>(AlbumManager.Uid + 1);
+            
+
+
+            //var customAlbumsTag = GlobalDataBase.dbMusicTag.GetAlbumTagInfo(AlbumManager.Uid);
+            //customAlbumsTag.musicUids.Add(album.Uid);
+            ////GlobalDataBase.s_DbMusicTag.m_StageShowMusicUids.Add("");
+
+
+            //PnlStageInstance.m_MusicRootAnimator?.Play(PnlStageInstance.animNameAlbumIn);
+            //PnlStageInstance.RefreshMusicFSV();
         }
 
         private static void AddNewAlbums(int previousSize)
@@ -102,7 +133,7 @@ namespace CustomAlbums.Managers
             while (AlbumsDeleted.Count > 0)
             {
                 var albumName = AlbumsDeleted.Dequeue();
-                RemoveAllCachedAssets(albumName);
+                RemoveAllAssets(albumName);
                 Console.WriteLine($"Removed album via hot-reload: \"{albumName}\"");
             }
         }

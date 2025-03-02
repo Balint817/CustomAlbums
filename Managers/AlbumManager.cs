@@ -49,6 +49,7 @@ namespace CustomAlbums.Managers
                     ResourcesManager.instance.LoadFromName<Sprite>($"{albumName}_cover").hideFlags |=
                         HideFlags.DontUnloadUnusedAsset;
 
+                MaxCount++; // to make sure we don't re-use UID if a chart is un-loaded
                 Logger.Msg($"Loaded {albumName}: {album.Info.Name}");
                 OnAlbumLoaded?.Invoke(typeof(AlbumManager), new AlbumEventArgs(album));
                 return album;
