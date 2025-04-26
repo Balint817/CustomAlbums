@@ -1,5 +1,7 @@
 [![](https://dcbadge.vercel.app/api/server/mdmc)](https://discord.gg/mdmc)
  # CustomAlbums
+This repo is a fork of [MDMods/CustomAlbums](https://github.com/MDMods/CustomAlbums). \
+It uses [Balint817/BetterNativeHook](https://github.com/Balint817/BetterNativeHook) for cross-mod compatibility.
 CustomAlbums is a MelonLoader mod for peropero's Muse Dash. It allows the loading of custom songs in MDM format into Muse Dash.  
 This mod was written from the ground-up by [MDMC](https://github.com/MDMods), so joining the Discord server is the best way to reach us for help and information.
 ## Usage
