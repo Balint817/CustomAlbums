@@ -43,7 +43,7 @@ namespace CustomAlbums.Patches
         /// </summary>
         /// <param name="oldAssetName">The old assetName.</param>
         /// <param name="newAssetName">The new assetName where the value should be bound.</param>
-        /// <returns>true if the key was successfully bound; otherwise, false.</returns>
+        /// <returns><see langword="true"/> if the key was successfully bound; otherwise, <see langword="false"/>.</returns>
         internal static bool ModifyCacheKey(string oldAssetName, string newAssetName)
         {
             var success = AssetCache.Remove(oldAssetName, out var asset);
@@ -54,7 +54,7 @@ namespace CustomAlbums.Patches
         ///     Removes the specified key from the asset cache.
         /// </summary>
         /// <param name="key">The key corresponding to the value to be removed.</param>
-        /// <returns>true if the entry was successfully removed; otherwise, false.</returns>
+        /// <returns><see langword="true"/> if the entry was successfully removed; otherwise, <see langword="false"/>.</returns>
         internal static bool RemoveFromCache(string key)
         {
             return AssetCache.Remove(key);
@@ -254,7 +254,7 @@ namespace CustomAlbums.Patches
         /// <param name="returnValue">An instance that represents the trampoline's return value, and changes to it.</param>
         /// <param name="parameters">A reference to the parameters of the trampoline.</param>
         /// <returns>
-        ///     A pointer of either a newly created asset if it exists or the original asset pointer if a new one was not
+        ///     An <see cref="IntPtr"/> of either a newly created asset if it exists or the original asset <see cref="IntPtr"/> if a new one was not
         ///     created.
         /// </returns>
         private static void LoadFromNamePatch(ReturnValueReference returnValue, ReadOnlyCollection<ParameterReference> parameters)
@@ -332,7 +332,7 @@ namespace CustomAlbums.Patches
         /// </summary>
         /// <param name="name"></param>
         /// <param name="text"></param>
-        /// <returns>A new TextAsset initialized with the parameters.</returns>
+        /// <returns>A new <see cref="TextAsset"/> initialized with the parameters.</returns>
         private static TextAsset CreateTextAsset(string name, string text)
         {
             return new TextAsset(text)
